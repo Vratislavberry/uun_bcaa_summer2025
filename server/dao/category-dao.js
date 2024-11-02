@@ -19,6 +19,14 @@ function get(categoryId) {
 // Method to write an category to a file
 function create(category) {
   try {
+    const categoryList = list();
+    console.log(categoryList.some((item) => item.name === category.name));
+    if (categoryList.some((item) => item.name === category.name)) {
+      throw {
+        code: "uniqueNameAlreadyExists",
+        message: "exists category with given name",
+      };
+    }
     category.id = crypto.randomBytes(16).toString("hex");
     const filePath = path.join(categoryFolderPath, `${category.id}.json`);
     const fileData = JSON.stringify(category);
@@ -34,6 +42,17 @@ function update(category) {
   try {
     const currentCategory = get(category.id);
     if (!currentCategory) return null;
+
+    if (category.name && category.name !== currentCategory.name) {
+      const categoryList = list();
+      if (categoryList.some((item) => item.name === category.name)) {
+        throw {
+          code: "uniqueNameAlreadyExists",
+          message: "exists category with given name",
+        };
+      }
+    }
+
     const newCategory = { ...currentCategory, ...category };
     const filePath = path.join(categoryFolderPath, `${category.id}.json`);
     const fileData = JSON.stringify(newCategory);

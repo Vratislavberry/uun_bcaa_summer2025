@@ -28,9 +28,16 @@ async function UpdateAbl(req, res) {
       return;
     }
 
-    console.log(category);
     // update category in persistent storage
-    const updatedCategory = categoryDao.update(category);
+    let updatedCategory;
+    try {
+      updatedCategory = categoryDao.update(category);
+    } catch (e) {
+      res.status(400).json({
+        ...e,
+      });
+      return;
+    }
     if (!updatedCategory) {
       res.status(404).json({
         code: "categoryNotFound",

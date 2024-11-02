@@ -36,6 +36,7 @@ async function CreateAbl(req, res) {
 
     // check if categoryId exists
     const category = categoryDao.get(transaction.categoryId);
+
     if (!category) {
       res.status(400).json({
         code: "categoryDoesNotExist",
@@ -44,14 +45,15 @@ async function CreateAbl(req, res) {
       });
       return;
     }
-    transaction.category = category;
 
     // store transaction to persistent storage
     transaction = transactionDao.create(transaction);
+    transaction.category = category;
 
     // return properly filled dtoOut
     res.json(transaction);
   } catch (e) {
+    console.error(e);
     res.status(500).json({ message: e.message });
   }
 }

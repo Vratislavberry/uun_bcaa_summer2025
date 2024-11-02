@@ -28,7 +28,14 @@ async function CreateAbl(req, res) {
     }
 
     // store category to a persistant storage
-    category = categoryDao.create(category);
+    try {
+      category = categoryDao.create(category);
+    } catch (e) {
+      res.status(400).json({
+        ...e,
+      });
+      return;
+    }
 
     // return properly filled dtoOut
     res.json(category);

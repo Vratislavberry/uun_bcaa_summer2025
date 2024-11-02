@@ -38,6 +38,7 @@ function update(transaction) {
   try {
     const currentTransaction = get(transaction.id);
     if (!currentTransaction) return null;
+
     const newTransaction = { ...currentTransaction, ...transaction };
     const filePath = path.join(transactionFolderPath, `${transaction.id}.json`);
     const fileData = JSON.stringify(newTransaction);
@@ -78,10 +79,17 @@ function list() {
   }
 }
 
+// Method to list transactions by categoryId
+function listByCategoryId(categoryId) {
+  const transactionList = list();
+  return transactionList.filter((item) => item.categoryId === categoryId);
+}
+
 module.exports = {
   get,
   create,
   update,
   remove,
   list,
+  listByCategoryId,
 };
