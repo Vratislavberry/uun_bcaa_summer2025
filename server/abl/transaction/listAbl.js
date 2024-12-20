@@ -1,20 +1,42 @@
+const Ajv = require("ajv");
+const addFormats = require("ajv-formats").default;
+const ajv = new Ajv();
+addFormats(ajv);
+
 const transactionDao = require("../../dao/transaction-dao.js");
 const categoryDao = require("../../dao/category-dao.js");
 
+const schema = {
+  type: "object",
+  properties: {
+    date: { type: "string", format: "date-time" },
+  },
+  required: [],
+  additionalProperties: false,
+};
+
 async function ListAbl(req, res) {
   try {
-    const transactionList = transactionDao.list();
+    const filter = req.query?.date ? req.query : req.body;
+
+    // validate input
+    const valid = ajv.validate(schema, filter);
+    if (!valid) {
+      res.status(400).json({
+        code: "dtoInIsNotValid",
+        message: "dtoIn is not valid",
+        validationError: ajv.errors,
+      });
+      return;
+    }
+
+    const transactionList = transactionDao.list(filter);
 
     // get category map
     const categoryMap = categoryDao.getCategoryMap();
 
-    // add category to each transaction
-    transactionList.forEach((transaction) => {
-      transaction.category = categoryMap[transaction.categoryId];
-    });
-
     // return properly filled dtoOut
-    res.json(transactionList);
+    res.json({ itemList: transactionList, categoryMap });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

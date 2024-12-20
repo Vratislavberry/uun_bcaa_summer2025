@@ -20,7 +20,6 @@ function get(categoryId) {
 function create(category) {
   try {
     const categoryList = list();
-    console.log(categoryList.some((item) => item.name === category.name));
     if (categoryList.some((item) => item.name === category.name)) {
       throw {
         code: "uniqueNameAlreadyExists",

@@ -35,6 +35,16 @@ async function UpdateAbl(req, res) {
       return;
     }
 
+    // validate date
+    if (new Date(transaction.date) >= new Date()) {
+      res.status(400).json({
+        code: "invalidDate",
+        message: `date must be current day or a day in the past`,
+        validationError: ajv.errors,
+      });
+      return;
+    }
+
     // update transaction in database
     const updatedTransaction = transactionDao.update(transaction);
 

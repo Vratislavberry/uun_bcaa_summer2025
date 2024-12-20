@@ -9,10 +9,10 @@ const categoryDao = require("../../dao/category-dao.js");
 const schema = {
   type: "object",
   properties: {
-    counterparty: { type: "string" },
+    counterparty: { type: "string", maxLength: 150 },
     amount: { type: "number" },
     date: { type: "string", format: "date-time" },
-    note: { type: "string" },
+    note: { type: "string", maxLength: 250 },
     categoryId: { type: "string" },
   },
   required: ["counterparty", "amount", "date", "categoryId"],
@@ -29,6 +29,16 @@ async function CreateAbl(req, res) {
       res.status(400).json({
         code: "dtoInIsNotValid",
         message: "dtoIn is not valid",
+        validationError: ajv.errors,
+      });
+      return;
+    }
+
+    // validate date
+    if (new Date(transaction.date) >= new Date()) {
+      res.status(400).json({
+        code: "invalidDate",
+        message: `date must be current day or a day in the past`,
         validationError: ajv.errors,
       });
       return;

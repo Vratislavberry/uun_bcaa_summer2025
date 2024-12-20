@@ -32,7 +32,7 @@ async function DeleteAbl(req, res) {
     if (transactionList.length) {
       res.status(400).json({
         code: "categoryWithTransactions",
-        category: "category has related transactions and cannot be deleted",
+        message: "category has related transactions and cannot be deleted",
         validationError: ajv.errors,
       });
       return;

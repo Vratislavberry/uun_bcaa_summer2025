@@ -38,7 +38,6 @@ function update(transaction) {
   try {
     const currentTransaction = get(transaction.id);
     if (!currentTransaction) return null;
-
     const newTransaction = { ...currentTransaction, ...transaction };
     const filePath = path.join(transactionFolderPath, `${transaction.id}.json`);
     const fileData = JSON.stringify(newTransaction);
@@ -62,17 +61,24 @@ function remove(transactionId) {
 }
 
 // Method to list transactions in a folder
-function list() {
+function list(filter = {}) {
   try {
     const files = fs.readdirSync(transactionFolderPath);
-    const transactionList = files.map((file) => {
+    let transactionList = files.map((file) => {
       const fileData = fs.readFileSync(
         path.join(transactionFolderPath, file),
         "utf8"
       );
       return JSON.parse(fileData);
     });
+    const filterDate = filter.date
+      ? new Date(filter.date).getMonth()
+      : new Date().getMonth();
+    transactionList = transactionList.filter(
+      (item) => new Date(item.date).getMonth() === filterDate
+    );
     transactionList.sort((a, b) => new Date(a.date) - new Date(b.date));
+
     return transactionList;
   } catch (error) {
     throw { code: "failedToListTransactions", message: error.message };
