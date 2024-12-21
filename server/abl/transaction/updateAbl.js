@@ -12,7 +12,7 @@ const schema = {
     id: { type: "string", minLength: 32, maxLength: 32 },
     counterparty: { type: "string" },
     amount: { type: "number" },
-    date: { type: "string", format: "date-time" },
+    date: { type: "string", format: "date" },
     note: { type: "string" },
     categoryId: { type: "string" },
   },

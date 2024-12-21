@@ -11,7 +11,7 @@ const schema = {
   properties: {
     counterparty: { type: "string", maxLength: 150 },
     amount: { type: "number" },
-    date: { type: "string", format: "date-time" },
+    date: { type: "string", format: "date" },
     note: { type: "string", maxLength: 250 },
     categoryId: { type: "string" },
   },

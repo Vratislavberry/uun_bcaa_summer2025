@@ -1,10 +1,13 @@
 import Container from "react-bootstrap/esm/Container";
 import TransactionListProvider from "./transaction-list-provider";
+import DashboardContent from "./dashboard-content";
 
 function Dashboard() {
   return (
     <Container>
-      <TransactionListProvider>dashboard</TransactionListProvider>
+      <TransactionListProvider>
+        <DashboardContent />
+      </TransactionListProvider>
     </Container>
   );
 }

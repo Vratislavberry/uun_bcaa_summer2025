@@ -36,8 +36,8 @@ const FetchHelper = {
     delete: async (dtoIn) => {
       return await Call(baseUri, "transaction/delete", dtoIn, "post");
     },
-    list: async () => {
-      return await Call(baseUri, "transaction/list", null, "get");
+    list: async (dtoIn) => {
+      return await Call(baseUri, "transaction/list", dtoIn, "get");
     },
   },
 
