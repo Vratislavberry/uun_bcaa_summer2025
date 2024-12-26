@@ -35,6 +35,7 @@ function CategoryItemForm({ data, onClose }) {
             name="name"
             defaultValue={data?.name}
             disabled={state === "pending"}
+            required
           />
         </Modal.Body>
         <Modal.Footer>

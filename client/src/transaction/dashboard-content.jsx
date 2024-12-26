@@ -119,7 +119,7 @@ function DashboardContent() {
                 {`${dashboardData.sum.toLocaleString("cs")} Kč`}
               </div>
             </Stack>
-            <Card>
+            <Card className="border-0">
               <Card.Body>
                 <Card.Title>
                   <Stack direction="horizontal" gap={1}>
@@ -156,7 +156,7 @@ function DashboardContent() {
                 </Card.Text>
               </Card.Body>
             </Card>
-            <Card>
+            <Card className="border-0">
               <Card.Body>
                 <Card.Title>
                   <Stack direction="horizontal" gap={1}>

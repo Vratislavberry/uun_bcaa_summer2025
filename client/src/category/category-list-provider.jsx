@@ -11,6 +11,8 @@ function CategoryListProvider({ children }) {
     error: null,
   });
 
+  console.log(categoryListDto);
+
   async function handleLoad() {
     setCategoryListDto((current) => {
       return { ...current, state: "pending" };

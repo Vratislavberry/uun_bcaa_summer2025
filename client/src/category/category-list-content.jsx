@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
+import ListGroup from "react-bootstrap/ListGroup";
 
 import Icon from "@mdi/react";
 import { mdiTagPlusOutline } from "@mdi/js";
@@ -19,7 +20,7 @@ function CategoryListContent() {
   const { state, data } = useContext(CategoryListContext);
 
   return (
-    <Card className="border-0 ">
+    <Card className="border-0">
       {!!categoryItemFormData ? (
         <CategoryItemForm
           data={categoryItemFormData}
@@ -57,16 +58,18 @@ function CategoryListContent() {
         {state === "pending" && !data
           ? [0, 1, 2, 3].map((item) => <PendingItem key={item} />)
           : null}
-        {data?.itemList
-          ? data.itemList.map((item) => (
+        {data?.itemList ? (
+          <ListGroup className="border-1">
+            {data.itemList.map((item) => (
               <CategoryItem
                 key={item.id}
                 data={item}
                 setCategoryItemFormData={setCategoryItemFormData}
                 setCategoryItemDeleteDialog={setCategoryItemDeleteDialog}
               />
-            ))
-          : null}
+            ))}
+          </ListGroup>
+        ) : null}
       </Card.Body>
     </Card>
   );
