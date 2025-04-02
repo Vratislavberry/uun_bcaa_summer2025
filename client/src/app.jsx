@@ -9,7 +9,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout />}> {/* do Layoutu se vlozi komponenta dle routy v tele Route */}
             <Route index element={<Dashboard />} />
             <Route path="/categoryList" element={<CategoryList />} />
           </Route>
