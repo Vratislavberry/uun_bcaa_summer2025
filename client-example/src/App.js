@@ -15,7 +15,7 @@ function App() {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    setTimeout(() => setCurrentDate(new Date()), 5000);
+    setTimeout(() => setCurrentDate(new Date()), 1000);
   }, [currentDate]);
 
   const personList = [
